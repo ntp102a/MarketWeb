@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MarketWeb.Models;
 using PagedList.Core;
-using DiChoSaiGon.Helpper;
+using MarketWeb.Helpper;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 

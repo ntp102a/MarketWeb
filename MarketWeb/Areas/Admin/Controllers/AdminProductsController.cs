@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MarketWeb.Models;
 using PagedList.Core;
-using DiChoSaiGon.Helpper;
+using MarketWeb.Helpper;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 
@@ -30,9 +30,10 @@ namespace MarketWeb.Areas.Admin.Controllers
         public IActionResult Index(int page = 1, int CatID = 0)
         {
             var pageNumber = page;
-            var pageSize = 20;
+            var pageSize = 5;
 
             List<Product> IsProducts = new List<Product>();
+            ViewBag.CurrentCateID = CatID;
             if (CatID != 0)
             {
                 IsProducts = _context.Products
@@ -52,7 +53,7 @@ namespace MarketWeb.Areas.Admin.Controllers
 
             PagedList<Product> models = new PagedList<Product>(IsProducts.AsQueryable(), pageNumber, pageSize);
 
-            ViewBag.CurrentCateID = CatID;
+            
             ViewBag.CurrentPage = pageNumber;
 
             ViewData["DanhMuc"] = new SelectList(_context.Categories, "CatId", "CatName", CatID);

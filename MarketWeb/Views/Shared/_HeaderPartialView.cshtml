@@ -8,12 +8,13 @@
                             <img src="~/assets/images/logo/dark.png" alt="Header Logo">
                         </a>
                         <div class="header-search-area d-none d-lg-block">
-                            <form action="#" class="header-searchbox">
-                                <input id="keyword" name="keyword" class="input-field" type="text" placeholder="Tìm kiếm sản phẩm">
-                                <button class="btn btn-outline-whisper btn-primary-hover" type="submit"><i class="pe-7s-search"></i></button>
-                                <div id="records_table" class="results-box">
+                            <form class="header-searchbox">
+                                <input id="searchInput" name="searchInput" class="input-field" type="text" placeholder="Tìm kiếm sản phẩm">
+                                <button id="searchButton" class="btn btn-outline-whisper btn-primary-hover" type="submit"><i class="pe-7s-search"></i></button>
+                                
                             </form>
                         </div>
+                        <div id="searchResults"></div>
                         <div class="header-right">
                             <ul>
                                 <li class="dropdown d-none d-md-block">
@@ -414,26 +415,37 @@
 </header>
 
 @section Scripts{
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $("#keyword").keyup(function () {
-                var strkeyword = $('#keyword').val();
-                $.ajax({
-                    url: '/Search/FindProduct/',
-                    datatype: "json",
-                    type: "POST",
-                    data: { keyword: strkeyword },
-                    async: true,
-                    success: function (results) {
-                        $("#records_table").html("");
-                        $("#records_table").html(results);
-                    },
-                    error: function (xhr) {
-                        alert('error');
-                    }
-                });
-            });
+        $(document).on("click", "#searchButton", function () {
+            performSearch();
         });
-    </script>
 
+        $(document).on("keyup", "#searchInput", function (event) {
+            if (event.key === "Enter") {
+                performSearch();
+            }
+        });
+
+        function performSearch() {
+            var keyword = $("#searchInput").val();
+
+            $.ajax({
+                url: "/Search/FindProduct",
+                type: "POST",
+                data: { keyword: keyword },
+                success: function (data) {
+                    if (data) {
+                        $("#searchResults").html(data);
+                    } else {
+                        $("#searchResults").html("Không tìm thấy sản phẩm nào.");
+                    }
+                },
+                error: function () {
+                    console.log("Đã xảy ra lỗi khi tìm kiếm sản phẩm.");
+                }
+            });
+        }
+    </script>
 }
+

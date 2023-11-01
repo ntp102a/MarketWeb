@@ -20,7 +20,7 @@ namespace MarketWeb.Controllers
             try
             {
                 var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-                var pageSize = 10;
+                var pageSize = 5;
                 var IsPages = _context.Products
                     .AsNoTracking()
                     .OrderByDescending(x => x.DateCreated);

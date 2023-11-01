@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MarketWeb.Models;
-using DiChoSaiGon.Helpper;
+using MarketWeb.Helpper;
 using MarketWeb.Extension;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using MarketWeb.Areas.Admin.Models;
@@ -85,8 +85,6 @@ namespace MarketWeb.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
             _notyfService.Success("Tạo mới thành công");
             return RedirectToAction(nameof(Index));
-            ViewData["QuyenTruyCap"] = new SelectList(_context.Roles, "RoleId", "RoleName", account.RoleId);
-            return View(account);
         }
 
         // GET: Admin/AdminAccounts/ChangePassWord
